@@ -19,7 +19,7 @@
     a { text-decoration: none; color: inherit; }
 
     /* NAVBAR (same style as other pages) */
-    .navbar {
+    /* .navbar {
       position: fixed;
       top: 0;
       left: 0;
@@ -89,7 +89,173 @@
       transform: translateY(-1px);
       background: #be123c;
       box-shadow: 0 14px 26px rgba(225, 29, 72, 0.45);
-    }
+    } */
+     /* ---------- HAMBURGER BUTTON (mobile) ---------- */
+.nav-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: #f3f4f6;
+  padding: 8px;
+  margin-left: 10px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
+}
+
+.nav-toggle span {
+  width: 20px;
+  height: 2px;
+  border-radius: 999px;
+  background: #0f172a;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* transform into X when open */
+body.nav-open .nav-toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+body.nav-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+body.nav-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ---------- MOBILE DRAWER ---------- */
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 39;
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: -280px; /* hidden */
+  width: 260px;
+  height: 100vh;
+  background: #0f172a;
+  color: #f9fafb;
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.4);
+  padding: 18px 18px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.28s ease;
+  transform: translateX(0);
+  z-index: 40;
+}
+
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.mobile-nav-header .brand {
+  font-size: 18px;
+  font-weight: 800;
+  color: #f97373;
+}
+
+.mobile-close {
+  border: none;
+  background: transparent;
+  color: #f9fafb;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.mobile-nav-links {
+  list-style: none;
+  padding: 10px 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.mobile-nav-links li {
+  margin-bottom: 6px;
+}
+
+.mobile-nav-links a {
+  display: block;
+  padding: 10px 4px;
+  color: #e5e7eb;
+  font-size: 15px;
+  border-radius: 8px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.mobile-nav-links a:hover,
+.mobile-nav-links a.active {
+  background: rgba(248, 113, 113, 0.18);
+  color: #f97373;
+  transform: translateX(3px);
+}
+
+.mobile-nav-cta {
+  margin-top: 8px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: none;
+  background: #e11d48;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 16px 35px rgba(225, 29, 72, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.mobile-nav-cta:hover {
+  transform: translateY(-2px);
+  background: #be123c;
+  box-shadow: 0 20px 45px rgba(225, 29, 72, 0.6);
+}
+
+/* ---------- TOGGLE OPEN STATE ---------- */
+body.nav-open .mobile-nav {
+  transform: translateX(-280px); /* slide in from right */
+}
+
+body.nav-open .mobile-nav-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---------- RESPONSIVE BEHAVIOR ---------- */
+@media (max-width: 900px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
+  /* hide desktop nav, keep brand + CTA + hamburger */
+  .nav-links {
+    display: none;
+  }
+
+  .nav-cta {
+    display: none; /* if you don’t want the big CTA on very small screens */
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+}
+
 
     /* HERO */
     .hero {
@@ -504,7 +670,7 @@
 <body>
 
   <!-- NAVBAR -->
-  <header class="navbar">
+  <!-- <header class="navbar">
     <div class="navbar-left">
       <div class="brand">ZIGSON</div>
       <ul class="nav-links">
@@ -515,7 +681,50 @@
       </ul>
     </div>
     <button class="nav-cta">+ Contact Us</button>
-  </header>
+  </header> -->
+  <header class="navbar">
+  <div class="navbar-left">
+    <div class="brand">ZIGSON</div>
+
+    <!-- Desktop nav links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-us.html">About Us</a></li>
+      <li><a href="feature-listings.html">Feature Listings</a></li>
+      <li><a href="contact-us.html" class="active">Contact Us</a></li>
+    </ul>
+  </div>
+
+  <!-- Desktop CTA -->
+  <button class="nav-cta">+ Contact Us</button>
+
+  <!-- Mobile hamburger button -->
+  <button class="nav-toggle" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Mobile side drawer -->
+<div class="mobile-nav-overlay"></div>
+
+<nav class="mobile-nav">
+  <div class="mobile-nav-header">
+    <span class="brand">ZIGSON</span>
+    <button class="mobile-close" aria-label="Close navigation">×</button>
+  </div>
+
+  <ul class="mobile-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about-us.html">About Us</a></li>
+    <li><a href="feature-listings.html">Feature Listings</a></li>
+    <li><a href="contact-us.html" class="active">Contact Us</a></li>
+  </ul>
+
+  <button class="mobile-nav-cta">+ Contact Us</button>
+</nav>
+
 
   <!-- HERO -->
   <section class="hero">
@@ -662,6 +871,44 @@
       </div>
     </div>
   </footer>
+<script>
+  (function () {
+    const toggle = document.querySelector('.nav-toggle');
+    const overlay = document.querySelector('.mobile-nav-overlay');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const closeBtn = document.querySelector('.mobile-close');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+
+    function openNav() {
+      document.body.classList.add('nav-open');
+    }
+
+    function closeNav() {
+      document.body.classList.remove('nav-open');
+    }
+
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        if (document.body.classList.contains('nav-open')) {
+          closeNav();
+        } else {
+          openNav();
+        }
+      });
+    }
+
+    if (overlay) overlay.addEventListener('click', closeNav);
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+
+    mobileLinks.forEach(function (link) {
+      link.addEventListener('click', closeNav);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeNav();
+    });
+  })();
+</script>
 
 </body>
 </html>
