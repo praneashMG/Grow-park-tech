@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Zigson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f9fafb;
+      color: #0f172a;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      z-index: 50;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 22px;
+      color: #e11d48;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+      font-size: 15px;
+    }
+
+    .nav-links a {
+      position: relative;
+      color: #0f172a;
+      padding-bottom: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #e11d48;
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: #e11d48;
+    }
+
+    .nav-cta {
+      padding: 9px 22px;
+      border-radius: 999px;
+      border: none;
+      background: #e11d48;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      box-shadow: 0 10px 20px rgba(225, 29, 72, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      background: #be123c;
+      box-shadow: 0 14px 26px rgba(225, 29, 72, 0.45);
+    }
+
+    /* ---------- HERO ABOUT ---------- */
+    .about-hero {
+      position: relative;
+      min-height: 65vh;
+      margin-top: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #ffffff;
+      overflow: hidden;
+    }
+
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("https://images.unsplash.com/photo-1486304873000-235643847519?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.08);
+      animation: heroZoom 26s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    .about-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.55),
+        rgba(15, 23, 42, 0.85)
+      );
+      z-index: -1;
+    }
+
+    .about-hero-content {
+      max-width: 680px;
+      padding: 0 20px;
+      animation: fadeUp 1s ease-out both;
+    }
+
+    .about-hero-title {
+      font-size: clamp(38px, 5vw, 54px);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .about-hero-subtitle {
+      font-size: 16px;
+      color: #e5e7eb;
+    }
+
+    @keyframes heroZoom {
+      0% { transform: scale(1.08) translateY(0); }
+      100% { transform: scale(1.14) translateY(-10px); }
+    }
+
+    /* ---------- STORY SECTION ---------- */
+    .story-section {
+      padding: 80px 60px 90px;
+      background: radial-gradient(circle at top left, #ffffff 0, #f9fafb 45%, #f3f4f6 100%);
+    }
+
+    .story-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.1fr);
+      gap: 60px;
+      align-items: center;
+    }
+
+    .story-media {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 26px 60px rgba(15, 23, 42, 0.16);
+      animation: fadeUp 0.9s ease-out both;
+    }
+
+    .story-media img {
+      width: 100%;
+      display: block;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.03);
+      transition: transform 0.9s ease;
+    }
+
+    .story-media:hover img {
+      transform: scale(1.08);
+    }
+
+    .play-button {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .play-circle {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      animation: pulse 1.9s infinite;
+    }
+
+    .play-circle::before {
+      content: "▶";
+      margin-left: 4px;
+      color: #e11d48;
+      font-size: 26px;
+    }
+
+    .story-content {
+      animation: fadeUp 1s ease-out 0.15s both;
+    }
+
+    .section-eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #fb7185;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .section-underline {
+      width: 70px;
+      height: 3px;
+      border-radius: 999px;
+      background: #ef4444;
+      margin-bottom: 20px;
+    }
+
+    .section-text {
+      font-size: 15px;
+      color: #4b5563;
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+
+    .story-quote {
+      margin: 12px 0 24px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: #f3f4f6;
+      border-left: 4px solid #f97373;
+      font-size: 14px;
+      color: #111827;
+      font-style: italic;
+    }
+
+    /* ---------- WHY CHOOSE ZIGSON ---------- */
+    .why-section {
+      padding: 70px 60px 90px;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .why-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .why-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .why-subtitle {
+      font-size: 15px;
+      color: #6b7280;
+      margin-bottom: 40px;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 26px;
+    }
+
+    .why-card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 30px 26px 32px;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.35s cubic-bezier(.21,.72,.27,1),
+                  box-shadow 0.35s ease,
+                  background 0.35s ease;
+      opacity: 0;
+      transform: translateY(26px);
+      animation: fadeUp 0.9s ease-out forwards;
+    }
+
+    .why-card:nth-child(1) { animation-delay: 0.1s; }
+    .why-card:nth-child(2) { animation-delay: 0.2s; }
+    .why-card:nth-child(3) { animation-delay: 0.3s; }
+
+    .why-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      background: radial-gradient(circle at top,
+        rgba(248, 113, 113, 0.11),
+        transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: -1;
+    }
+
+    .why-icon {
+      font-size: 46px;
+      margin-bottom: 18px;
+      color: #ef4444;
+      transition: transform 0.35s ease;
+    }
+
+    .why-card-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .why-card-text {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.7;
+    }
+
+    .why-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 30px 70px rgba(248, 113, 113, 0.25);
+    }
+
+    .why-card:hover::before {
+      opacity: 1;
+    }
+
+    .why-card:hover .why-icon {
+      transform: translateY(-6px) scale(1.08);
+    }
+
+    /* ---------- RED STATS BAR ---------- */
+    .stats-section {
+      background: linear-gradient(90deg, #e11d48, #b91c1c);
+      color: #ffffff;
+      padding: 50px 40px 60px;
+    }
+
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 26px;
+      text-align: center;
+    }
+
+    .stat-item {
+      position: relative;
+      padding: 10px 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease-out forwards;
+    }
+
+    .stat-item:nth-child(1) { animation-delay: 0.1s; }
+    .stat-item:nth-child(2) { animation-delay: 0.18s; }
+    .stat-item:nth-child(3) { animation-delay: 0.26s; }
+    .stat-item:nth-child(4) { animation-delay: 0.34s; }
+
+    .stat-number {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      text-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    }
+
+    .stat-label {
+      font-size: 14px;
+    }
+
+    .stat-number span {
+      display: inline-block;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer {
+      background: #020617;
+      color: #e5e7eb;
+      padding: 70px 60px 40px;
+    }
+
+    .footer-top {
+      max-width: 1200px;
+      margin: 0 auto 30px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr));
+      gap: 40px;
+    }
+
+    .footer-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f97373;
+      margin-bottom: 16px;
+    }
+
+    .footer-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #9ca3af;
+    }
+
+    .footer-links {
+      list-style: none;
+      font-size: 14px;
+    }
+
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+
+    .footer-links a {
+      color: #e5e7eb;
+      opacity: 0.85;
+      transition: color 0.25s ease, opacity 0.25s ease, padding-left 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #f97373;
+      opacity: 1;
+      padding-left: 4px;
+    }
+
+    .footer-social {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: #f97373;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-2px);
+      background: #f97373;
+      color: #020617;
+      box-shadow: 0 14px 30px rgba(248,113,113,0.6);
+    }
+
+    .footer-line {
+      max-width: 1200px;
+      margin: 0 auto 18px;
+      border: none;
+      border-top: 1px solid #111827;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .footer-bottom a {
+      color: #9ca3af;
+      transition: color 0.2s ease;
+    }
+
+    .footer-bottom a:hover {
+      color: #f97373;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 18px 40px rgba(0,0,0,0.45); }
+      70% { transform: scale(1.08); box-shadow: 0 18px 40px rgba(0,0,0,0.7); }
+      100% { transform: scale(1); box-shadow: 0 18px 40px rgba(0,0,0,0.45); }
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 980px) {
+      .navbar {
+        padding: 0 20px;
+      }
+      .nav-links {
+        display: none; /* simple desktop-only nav; could be replaced with burger */
+      }
+      .story-section,
+      .why-section,
+      .footer,
+      .stats-section {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .story-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+      }
+      .why-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .stats-inner {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .footer-top {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .why-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .stats-inner {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 24px;
+      }
+      .footer-top {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .about-hero-title {
+        font-size: 32px;
+      }
+      .section-title,
+      .why-title {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <div class="brand">ZIGSON</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="feature-listings.html">Feature Listings</a></li>
+        <li><a href="contact-us.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <button class="nav-cta">+ Contact Us</button>
+  </header>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="about-hero-content">
+      <h1 class="about-hero-title">About Zigson</h1>
+      <p class="about-hero-subtitle">
+        Revolutionizing Real Estate with Innovation &amp; Trust
+      </p>
+    </div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="story-section">
+    <div class="story-inner">
+      <div class="story-media">
+        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80" alt="Team collaboration" />
+        <div class="play-button">
+          <div class="play-circle"></div>
+        </div>
+      </div>
+
+      <div class="story-content">
+        <p class="section-eyebrow">OUR STORY</p>
+        <h2 class="section-title">Our Story</h2>
+        <div class="section-underline"></div>
+
+        <p class="section-text">
+          Founded in 2015, Zigson has been a pioneer in transforming the real estate industry with
+          cutting-edge technology and exceptional customer service.
+        </p>
+        <p class="section-text">
+          Our mission is to make real estate accessible, transparent, and beneficial to everyone.
+          We believe in building lasting relationships with our clients.
+        </p>
+
+        <div class="story-quote">
+          "We don't just sell properties, we build dreams and create communities."
+        </div>
+
+        <p class="section-text">
+          With over 10,000 successful transactions and a team of dedicated professionals, we
+          continue to redefine excellence in real estate.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE ZIGSON -->
+  <section class="why-section">
+    <div class="why-inner">
+      <h2 class="why-title">Why Choose Zigson</h2>
+      <p class="why-subtitle">
+        We offer comprehensive solutions tailored to your real estate needs
+      </p>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🏠</div>
+          <h3 class="why-card-title">Premium Properties</h3>
+          <p class="why-card-text">
+            Handpicked properties in prime locations with verified ownership and documentation.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🛡️</div>
+          <h3 class="why-card-title">Secure Transactions</h3>
+          <p class="why-card-text">
+            Transparent and secure transactions with legal expertise and complete buyer protection.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🎧</div>
+          <h3 class="why-card-title">24/7 Support</h3>
+          <p class="why-card-text">
+            Dedicated customer support available round the clock to assist you throughout your journey.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section class="stats-section" id="stats">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-number"><span class="count" data-target="10">0</span>K+</div>
+        <div class="stat-label">Successful Transactions</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-number"><span class="count" data-target="50">0</span>K+</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-number"><span class="count" data-target="500">0</span>+</div>
+        <div class="stat-label">Active Properties</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-number"><span class="count" data-target="15">0</span>+</div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div>
+        <h3 class="footer-title">ABOUT ZIGSON</h3>
+        <p class="footer-text">
+          Premium real estate solutions trusted by thousands of homeowners and investors nationwide.
+        </p>
+        <div class="footer-social">
+          <div class="social-icon">f</div>
+          <div class="social-icon">t</div>
+          <div class="social-icon">in</div>
+          <div class="social-icon">ig</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="footer-title">QUICK LINKS</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="feature-listings.html">Featured Listing</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-title">RESOURCES</h3>
+        <ul class="footer-links">
+          <li><a href="#">Buying Guide</a></li>
+          <li><a href="#">Selling Tips</a></li>
+          <li><a href="#">Market Report</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-title">CONTACT</h3>
+        <ul class="footer-links">
+          <li><a href="mailto:info@zigson.com">info@zigson.com</a></li>
+          <li><a href="tel:+18001234567">+1 (800) 123-4567</a></li>
+          <li><a href="#">123 Real Estate Ave, CA 90210</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="footer-line" />
+
+    <div class="footer-bottom">
+      <p>© 2025 Zigson Real Estate. All rights reserved.</p>
+      <p>
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- JS: COUNT-UP FOR STATS -->
+  <script>
+    function animateCounters() {
+      const counters = document.querySelectorAll('.count');
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const duration = 1800;
+        const startTime = performance.now();
+
+        function update(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const value = Math.floor(progress * target);
+          counter.textContent = value;
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+      });
+    }
+
+    const statsSection = document.getElementById('stats');
+    let statsStarted = false;
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !statsStarted) {
+          statsStarted = true;
+          animateCounters();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    observer.observe(statsSection);
+  </script>
+</body>
+</html>
